@@ -1,0 +1,86 @@
+Performance is measured for a machine A running a program P
+		=  1 / Time(A, P)
+
+Major Metrics
+	-> Latency	: wall clock time, elapsed time
+				-> How long it takes to do X
+	-> Throughput : Bandwidth
+				-> How much of work X is done in a given time
+
+CPI : Cycles per instruction
+	-> Each instruction takes a fixed number of cycles
+	-> Say CPI for load is 7 cycles, and for add is 5 cycles
+	-> So we measure average CPI of a benchmark program having a good
+	instruction mix.
+	-> Comparing CPIs can tell which machine is faster but this is for
+	a non pipeline machines and assuming same clock frequency. So ideally
+	you should be looking at the time taken by different programs.
+
+IPC : Instructions per cycle
+	-> inverse of CPI
+	-> Used if CPI < 1, as ppl prefer numbers greater than 1
+
+Clock Frequency : Just by comparing IPC we may not be able to say one processor
+	is faster than the other - we have to consider clock frequency also
+	-> Time = IPC * clock frequency
+
+MIPS : Million Instructions Per Second
+FLOPS : Million Floating Point Instructions Per Seconds
+	-> Not effective measure as you can make a program that only do NOPs
+	-> But helps to understand the max theoritical limit possible.
+	-> 1000 MIPS = 1 IPC * 1 GHz 
+
+Benchmarks :
+	-> SPECint : Best for single threaded performance
+		-> Many optimized apps like graphs, traffic control, chess games
+	-> SPECfp : Scientific Applications
+	-> SPECpower : Benchmarks power over different system load
+	-> SPECmp : Multithreaded performance
+	-> PARSEC : Mostly used in reasearch, doesn't scale well over 16 cores
+	-> SPECrate : Run independent apps, so this is best possible for
+	multithreaded apps.
+	-> Dhrystone : ARM and embedded use a lot bcoz it measures how well you
+	tuned your CPU and is close to the MIPS count so it is very close.
+	-> Coremark : Similar to Dhrystone but multithreaded and fits in cache, used
+	by NVIDIA
+	-> If multiple programs give contridicting results while comparing the same
+	machines then use arithematic mean(not correct but boosts numbers),
+	or normalize them and use geometric mean(computes execution times) or harmonic
+	mean(computes throughput - inverse of execution times)
+
+Amdahl's Law :
+	-> Performance gain is limited by the fraction of improved execution, eg) if
+	you speed of 50% of your entire code then only your max speedup is 2.
+
+Iron Law :
+	-> Time = Instruction Count * CPI * (1/Clock frequency)
+	-> Instruction count is mostly determined by compiler, ISA
+	-> CPI is determined by ISA, organization
+	-> Clock Frequency is determined by organization, technology
+
+Little's Law :
+	-> Used to size structures, say memory latency is 5 cycles and IPC is 2
+	cycles then you need to have a queue with outstanding 10 memory
+	transactions.
+	-> No of transactions = Arrival rate * Avg. time in system
+
+Technology Trends :
+	-> Microprocessor performance increases 50% per year
+	-> Transistor count double every 2 years
+	-> DRAM capacity quadruples every 3 years
+	-> Disks increase 60% in capacity (Doubles every 1.6 years)
+	-> Circuit boards 5% increase in wire density
+	-> 15% faster devices(doubles every 5 years)
+	-> Circuits are either becoming faster or use use lower power, lets call
+	either X
+	-> clock rate improves roughly proportional to X
+	-> Number of transistor improves at pow (X, 2)
+
+Memory Wall : Growing disparity between processor speed and speed of memory
+	outside the CPU chip
+	-> Fix was to keep adding caches
+	-> Now with 3D chips this problem should reduce.
+
+Power wastage sources :
+	-> Static power : leakage power (energy waste for doing nothing)
+	-> Dynamic power : transistor switching (energy waste for doing work) 
